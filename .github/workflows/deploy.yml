@@ -28,7 +28,7 @@ jobs:
           pip install -r requirements-dev.txt
           
       - name: Rodar Pytest
-        run: pytest -q
+        run: python -m pytest -q
 
   deploy:
     name: Build e Deploy (CD)
