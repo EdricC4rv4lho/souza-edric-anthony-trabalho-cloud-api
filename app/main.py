@@ -67,7 +67,19 @@ def create_app(test_config=None):
         if not cursor.rowcount:
             return jsonify(error="tarefa nao encontrada"), 404
         return jsonify(id=task_id, done=data["done"]), 200
+    @app.delete("/tasks/<int:task_id>")
+    def delete_task(task_id):
+        with connect() as db:
+            cursor = db.execute("DELETE FROM tasks WHERE id=?", (task_id,))
+            db.commit()
+        if not cursor.rowcount:
+            return jsonify(error="tarefa nao encontrada"), 404
+        return "", 204
 
+    @app.get("/version")
+    def get_version():
+        return jsonify(version="1.0.0", description="API com CI/CD configurado"), 200
+    
     return app
 
 
